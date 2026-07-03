@@ -1,0 +1,22 @@
+# 딥러닝 학습 노트 (TensorFlow / Keras FFNN)
+
+TensorFlow·Keras FFNN 학습 과정에서 정리한 핵심 개념, 코드, 학습 계획 모음입니다.
+
+## 문서 목록
+
+| 파일 | 내용 |
+|------|------|
+| [01-ffnn-core-concepts.md](./docs/01-ffnn-core-concepts.md) | 핵심 개념 공책용 정리 + 전체 흐름도 |
+| [02-code-snippets.md](./docs/02-code-snippets.md) | 실습용 Python 코드 블록 모음 |
+| [03-code-review-checklist.md](./docs/03-code-review-checklist.md) | 노트북 코드 리뷰 + 체크리스트 + 학습 방향 |
+
+## 학습 일정 (참고)
+
+- **1주차:** TensorFlow / Keras 마스터
+- **2주차:** PyTorch
+- **7/15:** 딥러닝 핵심 프로젝트 시작 → Django 웹 연동·배포
+
+## 로컬 실행 환경
+
+- Python, TensorFlow 2.x, Keras 3.x
+- Google Colab (GPU) + Cursor / VS Code 병행
