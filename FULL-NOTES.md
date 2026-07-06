@@ -139,11 +139,31 @@ Functional/Sequential → compile → fit → Callbacks → .keras 저장
 
 ---
 
-# Part 10. Day 1~3 체크리스트
+# Part 10. Day 1~5 체크리스트
 
 - [ ] FFNN: Y = activation(X@W+b), 역전파 4줄, Keras 4단계
 - [ ] Keras: Functional/Sequential, loss 짝 맞추기, Callbacks 3종
 - [ ] CNN: Conv shape 계산, 파라미터 수, save/load
+- [ ] Transfer: include_top/trainable/GAP, GRAD-CAM, loss 짝 (이진분류)
+
+---
+
+# Part 11. Transfer Learning (Day 4~5) 요약
+
+```
+ImageNet base(고정) → GAP → Dropout → Dense → softmax
+```
+
+| 항목 | 내용 |
+|------|------|
+| 방법 | Feature Extraction (trainable=False) / Fine-tuning |
+| base | Xception, EfficientNetB0/V2S, weights='imagenet' |
+| 전처리 | 흑백→Concat×3, Xception: -1~1, EfficientNet: 0~1 |
+| 해석 | GRAD-CAM (gradient × feature map → heatmap) |
+| 데이터 | ImageDataGenerator / tfds / cv2 직접 로드 |
+| 튜닝 | GridSearchCV + scikeras KerasClassifier |
+
+자세한 내용: [06-transfer-learning-notes.md](./docs/06-transfer-learning-notes.md)
 
 ---
 
