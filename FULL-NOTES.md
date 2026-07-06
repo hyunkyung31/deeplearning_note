@@ -1,6 +1,6 @@
-# 딥러닝 FFNN 통합 학습 노트 (복사용)
+# 딥러닝 통합 학습 노트 (복사용)
 
-> 이 파일 하나에 핵심 개념 + 코드 + 체크리스트를 모두 담았습니다.
+> FFNN + Keras + CNN 핵심 개념 + 코드 + 체크리스트 통합본
 
 ---
 
@@ -100,6 +100,50 @@ model.evaluate(x_test, y_test)
 | Keras | 정의→compile→fit→predict |
 | 분류 | SparseCE(from_logits=True), softmax 없음 |
 | 데이터 | train/val/test, Dataset pipeline |
+
+---
+
+# Part 8. Keras API (Day 2) 요약
+
+```
+Functional/Sequential → compile → fit → Callbacks → .keras 저장
+```
+
+| 항목 | 내용 |
+|------|------|
+| 모델 정의 | Functional (`Input→Dense→Model`) / Sequential |
+| 분류 loss | sparse CE(정수 y) / categorical CE(원-핫 y) |
+| Callbacks | EarlyStopping, ModelCheckpoint, ReduceLROnPlateau |
+| Dropout | 과적합 방지, 파라미터 0 |
+| 회귀 | MSE + MAE, 마지막층 activation=None |
+
+자세한 내용: [04-keras-notes.md](./docs/04-keras-notes.md)
+
+---
+
+# Part 9. CNN (Day 3) 요약
+
+```
+이미지 (H,W,C) → Conv2D → MaxPool → Flatten → Dense → softmax
+```
+
+| 항목 | 내용 |
+|------|------|
+| shape | (batch, height, width, channels) |
+| Conv 출력 (valid) | (입력 - kernel + 1) |
+| MaxPool | 2×2 → 크기 절반, 파라미터 0 |
+| MNIST 성능 | FFNN 94.7% → CNN 99.3% |
+| 배포 | ModelCheckpoint → load_model → predict |
+
+자세한 내용: [05-cnn-notes.md](./docs/05-cnn-notes.md)
+
+---
+
+# Part 10. Day 1~3 체크리스트
+
+- [ ] FFNN: Y = activation(X@W+b), 역전파 4줄, Keras 4단계
+- [ ] Keras: Functional/Sequential, loss 짝 맞추기, Callbacks 3종
+- [ ] CNN: Conv shape 계산, 파라미터 수, save/load
 
 ---
 
