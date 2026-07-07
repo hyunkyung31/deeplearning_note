@@ -139,12 +139,14 @@ Functional/Sequential → compile → fit → Callbacks → .keras 저장
 
 ---
 
-# Part 10. Day 1~5 체크리스트
+# Part 10. Day 1~6 체크리스트
 
 - [ ] FFNN: Y = activation(X@W+b), 역전파 4줄, Keras 4단계
 - [ ] Keras: Functional/Sequential, loss 짝 맞추기, Callbacks 3종
 - [ ] CNN: Conv shape 계산, 파라미터 수, save/load
 - [ ] Transfer: include_top/trainable/GAP, GRAD-CAM, loss 짝 (이진분류)
+- [ ] AE: fit(X,X), Denoising/Anomaly/Retrieval, Encoder 분리
+- [ ] GAN: tanh+(-1~1) 전처리, from_logits BCE, @tf.function train_step
 
 ---
 
@@ -164,6 +166,26 @@ ImageNet base(고정) → GAP → Dropout → Dense → softmax
 | 튜닝 | GridSearchCV + scikeras KerasClassifier |
 
 자세한 내용: [06-transfer-learning-notes.md](./docs/06-transfer-learning-notes.md)
+
+---
+
+# Part 12. Autoencoder / GAN (Day 6) 요약
+
+```
+입력 x → Encoder → z → Decoder → x̂  (AE, loss = MSE/BCE)
+Noise z → Generator → fake ↔ Discriminator ↔ real  (GAN)
+```
+
+| 항목 | 내용 |
+|------|------|
+| AE 활용 | Denoising, Anomaly(MSE threshold), Image Retrieval(L2) |
+| Conv AE | UpSampling2D decoder / CelebA·GAN은 Conv2DTranspose |
+| Transfer | Encoder(64d) → Dense 분류 / RandomForest |
+| GAN G | Dense→Reshape→Conv2DTranspose×2→tanh (-1~1) |
+| GAN D | Conv2D×2→Flatten→Dense(1), from_logits=True |
+| 안정화 | LeakyReLU 0.2, Dropout 0.3, label smoothing 0.9, Adam β1=0.5 |
+
+자세한 내용: [07-ae-gan-notes.md](./docs/07-ae-gan-notes.md)
 
 ---
 

@@ -1,6 +1,6 @@
 # 딥러닝 학습 노트 (TensorFlow / Keras)
 
-TensorFlow·Keras 학습 과정(FFNN → Keras API → CNN → Transfer Learning)에서 정리한 핵심 개념, 코드, 학습 계획 모음입니다.
+TensorFlow·Keras 학습 과정(FFNN → Keras API → CNN → Transfer Learning → AE/GAN)에서 정리한 핵심 개념, 코드, 학습 계획 모음입니다.
 
 ## 문서 목록
 
@@ -12,6 +12,7 @@ TensorFlow·Keras 학습 과정(FFNN → Keras API → CNN → Transfer Learning
 | [04-keras-notes.md](./docs/04-keras-notes.md) | Day 2 — Keras API (Functional/Sequential, Callbacks, Optuna) |
 | [05-cnn-notes.md](./docs/05-cnn-notes.md) | Day 3 — CNN (Conv2D, Pooling, Feature Map, save/load) |
 | [06-transfer-learning-notes.md](./docs/06-transfer-learning-notes.md) | Day 4~5 — Transfer Learning (GRAD-CAM, Xception, EfficientNet, tfds) |
+| [07-ae-gan-notes.md](./docs/07-ae-gan-notes.md) | Day 6 — Autoencoder (Denoising, Anomaly, GAN, 손코딩 템플릿) |
 
 ## 학습 일정 (참고)
 
