@@ -13,12 +13,19 @@ TensorFlow·Keras 학습 과정(FFNN → Keras API → CNN → Transfer Learning
 | [05-cnn-notes.md](./docs/05-cnn-notes.md) | Day 3 — CNN (Conv2D, Pooling, Feature Map, save/load) |
 | [06-transfer-learning-notes.md](./docs/06-transfer-learning-notes.md) | Day 4~5 — Transfer Learning (GRAD-CAM, Xception, EfficientNet, tfds) |
 | [07-ae-gan-notes.md](./docs/07-ae-gan-notes.md) | Day 6 — Autoencoder (Denoising, Anomaly, GAN, 손코딩 템플릿) |
+| [08-gan-class-based.md](./docs/08-gan-class-based.md) | Day 6 — GAN 함수→클래스 베이스 전환 + metric + save/load |
 
 ## 학습 일정 (참고)
 
 - **1주차:** TensorFlow / Keras 마스터
 - **2주차:** PyTorch
 - **7/15:** 딥러닝 핵심 프로젝트 시작 → Django 웹 연동·배포
+
+## 예제 코드
+
+| 경로 | 내용 |
+|------|------|
+| [examples/gan_class_based.py](./examples/gan_class_based.py) | MNIST DCGAN 클래스 베이스 전체 코드 |
 
 ## 로컬 실행 환경
 

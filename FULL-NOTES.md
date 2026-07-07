@@ -147,6 +147,7 @@ Functional/Sequential → compile → fit → Callbacks → .keras 저장
 - [ ] Transfer: include_top/trainable/GAP, GRAD-CAM, loss 짝 (이진분류)
 - [ ] AE: fit(X,X), Denoising/Anomaly/Retrieval, Encoder 분리
 - [ ] GAN: tanh+(-1~1) 전처리, from_logits BCE, @tf.function train_step
+- [ ] GAN class: GAN(keras.Model), metric 4종 세트, G/D 각각 save
 
 ---
 
@@ -186,6 +187,8 @@ Noise z → Generator → fake ↔ Discriminator ↔ real  (GAN)
 | 안정화 | LeakyReLU 0.2, Dropout 0.3, label smoothing 0.9, Adam β1=0.5 |
 
 자세한 내용: [07-ae-gan-notes.md](./docs/07-ae-gan-notes.md)
+
+클래스 베이스 전환: [08-gan-class-based.md](./docs/08-gan-class-based.md)
 
 ---
 

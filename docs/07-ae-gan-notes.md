@@ -404,7 +404,8 @@ def train_step(real_images):
 
 ## 5. 과제 / 다음 학습
 
-- [ ] GAN 모델 `.keras` 저장 + noise 입력 → 이미지 생성 함수 작성
+- [x] GAN 클래스 베이스 전환 → [08-gan-class-based.md](./08-gan-class-based.md), [examples/gan_class_based.py](../examples/gan_class_based.py)
+- [ ] GAN 모델 `.keras` 저장 + noise 입력 → 이미지 생성 함수 작성 (예제 코드 포함)
 - [ ] CelebA 속성 편집: **랜덤 방향 X** → `(z_smile - z_neutral)` 평균으로 attribute_axis 학습
 - [ ] VAE: reparameterization trick + KL loss (노트북 미포함, 추가 학습)
 
