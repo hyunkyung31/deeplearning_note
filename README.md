@@ -14,6 +14,7 @@ TensorFlow·Keras 학습 과정(FFNN → Keras API → CNN → Transfer Learning
 | [06-transfer-learning-notes.md](./docs/06-transfer-learning-notes.md) | Day 4~5 — Transfer Learning (GRAD-CAM, Xception, EfficientNet, tfds) |
 | [07-ae-gan-notes.md](./docs/07-ae-gan-notes.md) | Day 6 — Autoencoder (Denoising, Anomaly, GAN, 손코딩 템플릿) |
 | [08-gan-class-based.md](./docs/08-gan-class-based.md) | Day 6 — GAN 함수→클래스 베이스 전환 + metric + save/load |
+| [09-nlp-timeseries-attention-notes.md](./docs/09-nlp-timeseries-attention-notes.md) | Day 2 보충 — 시계열 · NLP · Attention · OpenCV 통합 필기 노트 |
 
 ## 학습 일정 (참고)
 
