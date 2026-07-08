@@ -45,6 +45,8 @@ flowchart TD
     G --> H[Keras Attention 모델]
     D --> I[감정분석 Embedding]
     I --> J[OpenCV 얼굴 검출]
+    J --> K[웃음·눈 검출]
+    K --> L[2단계: 얼굴 안 눈·웃음만]
 ```
 
 ### 1-3. 모델별 입력 차원 (가장 중요)
@@ -87,7 +89,10 @@ flowchart TD
 
 ### OpenCV
 - OpenCV는 **BGR**, matplotlib은 **RGB** → `cvtColor(BGR2RGB)` 필수
-- Haar Cascade = 미리 학습된 패턴으로 얼굴 위치 `(x,y,w,h)` 검출
+- Haar Cascade = 미리 학습된 패턴으로 `(x,y,w,h)` 검출
+- `detectMultiScale(grey, scaleFactor, minNeighbors)` — minNeighbors 클수록 엄격
+- **2단계 검출**: 얼굴 먼저 → 눈·웃음이 얼굴 박스 **안에 포함**될 때만 그림
+- 포함 조건: `x<=x_s`, `y<=y_s`, `x+w>=x_s+w_s`, `y+h>=y_s+h_s`
 
 ---
 
@@ -148,6 +153,7 @@ flowchart TD
 | Transformer 전체 | 번역, 요약, GPT | O |
 | 감정 Embedding 모델 | 리뷰·댓글 긍/부정 | X |
 | OpenCV Haar | 카메라 얼굴인식, 사진 앱 | X |
+| OpenCV 2단계 | 얼굴→눈/웃음 (오검출 감소) | X |
 
 **한 줄:** 번역 = Transformer/Attention 계열 | 긍/부·뉴스분류 = sigmoid/softmax 분류 | 검색 = SBERT/Attention
 
@@ -344,6 +350,69 @@ plt.imshow(cv2.cvtColor(base_image, cv2.COLOR_BGR2RGB))
 plt.show()
 ```
 
+### 5-9. OpenCV 웃음·눈 + 2단계 검출 (얼굴 안만)
+
+```python
+import cv2
+import matplotlib.pyplot as plt
+
+base_image = cv2.imread('family.jpg')
+grey = cv2.cvtColor(base_image, cv2.COLOR_BGR2GRAY)
+
+# --- cascade 로드 ---
+face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+smile_cascade = cv2.CascadeClassifier('haarcascade_smile.xml')
+eye_cascade = cv2.CascadeClassifier('haarcascade_eye.xml')
+
+# --- 1차 검출 (흑백 이미지에서) ---
+faces = face_cascade.detectMultiScale(grey, 1.3, 5)    # 얼굴: minNeighbors=5
+smiles = smile_cascade.detectMultiScale(grey, 1.3, 20) # 웃음: 20 (엄격)
+eyes = eye_cascade.detectMultiScale(grey, 1.3, 1)      # 눈: 1 (느슨)
+
+# --- 2단계: 얼굴 안의 눈·웃음만 그리기 ---
+test_image = cv2.imread('family.jpg')
+
+for (x, y, w, h) in faces:
+    cv2.rectangle(test_image, (x, y), (x+w, y+h), (255, 0, 0), 2)  # 파란=얼굴
+
+    for (x_s, y_s, w_s, h_s) in eyes:
+        if (x <= x_s) and (y <= y_s) and (x+w >= x_s+w_s) and (y+h >= y_s+h_s):
+            cv2.rectangle(test_image, (x_s, y_s), (x_s+w_s, y_s+h_s), (255, 255, 255), 2)
+
+    for (x_s, y_s, w_s, h_s) in smiles:
+        if (x <= x_s) and (y <= y_s) and (x+w >= x_s+w_s) and (y+h >= y_s+h_s):
+            cv2.rectangle(test_image, (x_s, y_s), (x_s+w_s, y_s+h_s), (0, 255, 0), 2)
+
+plt.imshow(cv2.cvtColor(test_image, cv2.COLOR_BGR2RGB))
+plt.show()
+```
+
+**detectMultiScale 파라미터 & 박스 색 (BGR):**
+
+| 대상 | minNeighbors | 박스 색 (BGR) | 이유 |
+|:---|:---:|:---|:---|
+| 얼굴 | 5 | `(255, 0, 0)` 파란 | 기본 |
+| 웃음 | 20 | `(0, 255, 0)` 초록 | 오검출 많아서 엄격 |
+| 눈 | 1 | `(255, 255, 255)` 흰 | 작아서 느슨하게 |
+
+**`(x, y, w, h)` 의미:**
+
+| 변수 | 의미 |
+|:---|:---|
+| `(x, y)` | 사각형 **좌상단** |
+| `(w, h)` | **너비, 높이** |
+| `(x+w, y+h)` | **우하단** (`cv2.rectangle` 두 번째 점) |
+
+**2단계 검출 흐름:**
+
+```
+grey → faces 검출
+         ↓
+for each 얼굴:
+    파란 박스
+    eyes/smiles 중 얼굴 박스 안에 완전 포함 → 흰/초록 박스
+```
+
 ---
 
 ## 6. 자주 틀리는 오타 · 에러 해결
@@ -404,7 +473,10 @@ OpenCV 이미지:    (H, W, 3) BGR
 - [ ] sigmoid+binary vs softmax+categorical 구분
 - [ ] 감정분석 vs 번역 용도 구분
 - [ ] OpenCV BGR→RGB 이유
+- [ ] `(x,y,w,h)` 좌상단·우하단 의미
+- [ ] minNeighbors 크기에 따른 검출 엄격도
+- [ ] 2단계 검출 if문 (얼굴 안 포함 조건) 4줄
 
 ---
 
-*마지막 업데이트: 2026-07-08*
+*마지막 업데이트: 2026-07-08 (OpenCV 2단계 검출 추가)*
